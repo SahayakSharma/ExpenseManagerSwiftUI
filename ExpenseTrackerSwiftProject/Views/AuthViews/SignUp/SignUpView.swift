@@ -13,7 +13,17 @@ struct SignUpView: View {
     @State var password:String=""
     @State var confirmPassword:String=""
     
+    @EnvironmentObject var authViewModel:AuthViewModel
     @EnvironmentObject var authRouter:AuthRouter
+    
+    func handleSignUp(){
+        Task{
+            let result=await authViewModel.createUserWithEmailPassword(email: username, password: password)
+            if result{
+                authRouter.navigate(to: .signIn)
+            }
+        }
+    }
 
     var body: some View {
         VStack{
@@ -35,7 +45,7 @@ struct SignUpView: View {
             Spacer().frame(height: 40)
             
             Button {
-                print("this is username",username,password)
+                handleSignUp()
             } label: {
                 Text("Create New Account")
             }

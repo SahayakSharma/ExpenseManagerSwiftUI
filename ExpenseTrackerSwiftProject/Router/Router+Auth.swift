@@ -1,6 +1,8 @@
 
 import SwiftUI
 import Combine
+import FirebaseAuth
+
 
 final class AuthRouter: ObservableObject {
     
