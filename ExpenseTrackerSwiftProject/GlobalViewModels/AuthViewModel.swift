@@ -5,8 +5,9 @@ import Combine
 @MainActor
 final class AuthViewModel:ObservableObject{
     
-    @Published var currentUser:FirebaseAuth.User?
-    @Published var Error:FirebaseAuth.AuthErrors?
+    @Published var userSession:FirebaseAuth.User?=nil
+    @Published var Error:FirebaseAuth.AuthErrors?=nil
+    @Published var currentUser:UserModel?=nil
     
     private let auth:FirebaseAuth.Auth = Auth.auth()
     
@@ -18,7 +19,8 @@ final class AuthViewModel:ObservableObject{
     
     func loadCurrentUser() async{
         if let user=auth.currentUser{
-            currentUser=user
+            userSession=user
+            currentUser=UserModel(id: user.uid, fullName: user.displayName ?? "default display name", email: user.email ?? "default email", phoneNumber: user.phoneNumber ?? "default phone number", photoURL: user.photoURL?.absoluteString ?? "default photo url")
         }
     }
     
@@ -40,6 +42,17 @@ final class AuthViewModel:ObservableObject{
         }catch{
             Error=error as? FirebaseAuth.AuthErrors
             return false
+        }
+    }
+    
+    func signOut(){
+        do{
+            try auth.signOut()
+            userSession=nil
+            currentUser=nil
+        }
+        catch{
+            Error=error as? FirebaseAuth.AuthErrors
         }
     }
 }

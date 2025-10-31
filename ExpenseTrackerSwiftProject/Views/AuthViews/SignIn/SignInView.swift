@@ -12,6 +12,8 @@ struct SignInView: View {
     @State var username:String=""
     @State var password:String=""
     @EnvironmentObject var authRouter:AuthRouter
+    @EnvironmentObject var authViewModel:AuthViewModel
+    
 
     var body: some View {
         VStack{
@@ -30,7 +32,9 @@ struct SignInView: View {
             Spacer().frame(height: 40)
             
             Button {
-                print("this is username",username,password)
+                Task{
+                    await authViewModel.signInWithEmailPassword(email: username, password: password)
+                }
             } label: {
                 Text("Confirm SignIn")
             }
