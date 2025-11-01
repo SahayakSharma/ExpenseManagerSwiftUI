@@ -31,10 +31,8 @@ struct SignUpView: View {
                 .resizable()
                 .scaledToFit()
             Spacer()
-            
-            Text("Create a New Account 😎")
-                .font(.headline)
-                .fontWeight(.semibold)
+ 
+            MovingGlowEffectText(textToShow: "Create a New Account ✌️", textColor: Color.black, movingGlowColor: Color.white,fontSize: .headline)
             Spacer().frame(height: 50)
             CustomTextInput(textBoundToInputField: $username,placeholderString: "Enter Email ID")
             Spacer().frame(height: 30)
@@ -67,4 +65,6 @@ struct SignUpView: View {
 
 #Preview {
     SignUpView()
+        .environmentObject(AuthViewModel())
+        .environmentObject(AuthRouter())
 }

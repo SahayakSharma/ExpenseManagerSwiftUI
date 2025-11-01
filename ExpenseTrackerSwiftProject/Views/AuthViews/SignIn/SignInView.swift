@@ -22,7 +22,7 @@ struct SignInView: View {
                 .scaledToFit()
             Spacer()
             
-            Text("Sign in to Your Account 💁")
+            MovingGlowEffectText(textToShow: "Sign in to Your Account 💁", textColor: Color.black, movingGlowColor: Color.white,fontSize: .headline)
                 .font(.headline)
                 .fontWeight(.semibold)
             Spacer().frame(height: 50)
@@ -58,4 +58,5 @@ struct SignInView: View {
 #Preview {
     SignInView()
         .environmentObject(AuthRouter())
+        .environmentObject(AuthViewModel())
 }
